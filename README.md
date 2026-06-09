@@ -1,6 +1,6 @@
 # 📡 Channel Service (Mock Delivery Gateway)
 
-This is the **Channel Service** component for the Roast & Co. AI-Native CRM. 
+This is the **Channel Service** component for the Roast & Co. AI-Native CRM - https://roastco-campaign-crew.vercel.app
 
 ## 🌟 What is this?
 In the real world, CRMs do not physically deliver text messages or emails themselves. They hand the messages off to dedicated Delivery Gateways (like Twilio, SendGrid, or AWS SES). 
@@ -8,7 +8,7 @@ In the real world, CRMs do not physically deliver text messages or emails themse
 This standalone Node.js (Express) server acts as that mock delivery gateway. It exists entirely separate from the main CRM, fulfilling the exact requirements of a "two-service, callback-driven loop".
 
 ## ⚙️ How it Works
-1. **Receives Payloads**: It exposes a `/send` API endpoint that accepts messages from the CRM. It immediately returns a `200 OK` so the CRM isn't kept waiting.
+1. **Receives Payloads**: It exposes a `/send` API endpoint that accepts messages from the CRM - https://roastco-campaign-crew.vercel.app & It immediately returns a `200 OK` so the CRM isn't kept waiting.
 2. **Simulates Reality**: It uses asynchronous `setTimeout` loops and randomized math to simulate network latency, delivery failures (15% chance), open rates (40% chance), and click rates (25% chance).
 3. **Fires Webhooks**: As the simulated lifecycle progresses, it fires HTTP POST requests (webhooks) back to the CRM's receipt API to announce exactly what "happened" to each message.
 4. **Live Dashboard**: It features a lightweight, full-screen frontend UI (`/public/index.html`) that tracks the live network traffic flowing through the server in real-time.
