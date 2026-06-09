@@ -15,8 +15,8 @@
   </style>
 </head>
 <body class="bg-slate-50 min-h-screen text-slate-900 font-sans">
-  <div class="max-w-5xl mx-auto p-8">
-    <div class="flex items-center justify-between mb-8">
+  <div class="w-full px-8 py-8 h-screen flex flex-col">
+    <div class="flex items-center justify-between mb-8 shrink-0">
       <div>
         <h1 class="text-2xl font-bold tracking-tight">Channel Service Network</h1>
         <p class="text-sm text-slate-500 mt-1">Live tracking of messages moving through the mock delivery network</p>
@@ -27,23 +27,25 @@
       </div>
     </div>
 
-    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-      <table class="w-full text-sm text-left">
-        <thead class="bg-slate-50 text-slate-500 border-b border-slate-200 text-xs uppercase">
-          <tr>
-            <th class="px-6 py-4 font-medium">Message ID</th>
-            <th class="px-6 py-4 font-medium">Channel</th>
-            <th class="px-6 py-4 font-medium">Recipient</th>
-            <th class="px-6 py-4 font-medium">Status</th>
-            <th class="px-6 py-4 font-medium text-right">Updated At</th>
-          </tr>
-        </thead>
-        <tbody id="messages-tbody" class="divide-y divide-slate-100">
-          <tr>
-            <td colspan="5" class="px-6 py-8 text-center text-slate-400">Loading network traffic...</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 flex-1 flex flex-col min-h-0 overflow-hidden">
+      <div class="overflow-y-auto flex-1">
+        <table class="w-full text-sm text-left relative">
+          <thead class="bg-slate-50 text-slate-500 text-xs uppercase sticky top-0 z-10 shadow-sm">
+            <tr>
+              <th class="px-6 py-4 font-medium">Message ID</th>
+              <th class="px-6 py-4 font-medium">Channel</th>
+              <th class="px-6 py-4 font-medium">Recipient</th>
+              <th class="px-6 py-4 font-medium">Status</th>
+              <th class="px-6 py-4 font-medium text-right">Updated At</th>
+            </tr>
+          </thead>
+          <tbody id="messages-tbody" class="divide-y divide-slate-100">
+            <tr>
+              <td colspan="5" class="px-6 py-8 text-center text-slate-400">Loading network traffic...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
