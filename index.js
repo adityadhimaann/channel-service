@@ -106,4 +106,5 @@ function randomBetween(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-app.listen(3001, () => console.log('Channel service running on port 3001'));
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => console.log(`Channel service running on port ${PORT}`));
