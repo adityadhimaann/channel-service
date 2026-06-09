@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Channel Service Dashboard</title>
+  <link rel="icon" href="data:,">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .status-accepted { @apply bg-slate-100 text-slate-700 border-slate-200; }
+    .status-delivered { @apply bg-blue-50 text-blue-700 border-blue-200; }
+    .status-opened { @apply bg-purple-50 text-purple-700 border-purple-200; }
+    .status-clicked { @apply bg-emerald-50 text-emerald-700 border-emerald-200; }
+    .status-failed { @apply bg-red-50 text-red-700 border-red-200; }
+  </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-900 font-sans">
+  <div class="max-w-5xl mx-auto p-8">
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-2xl font-bold tracking-tight">Channel Service Network</h1>
+        <p class="text-sm text-slate-500 mt-1">Live tracking of messages moving through the mock delivery network</p>
+      </div>
+      <div class="flex items-center gap-2 text-xs font-medium px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200">
+        <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+        Network Active
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+      <table class="w-full text-sm text-left">
+        <thead class="bg-slate-50 text-slate-500 border-b border-slate-200 text-xs uppercase">
+          <tr>
+            <th class="px-6 py-4 font-medium">Message ID</th>
+            <th class="px-6 py-4 font-medium">Channel</th>
+            <th class="px-6 py-4 font-medium">Recipient</th>
+            <th class="px-6 py-4 font-medium">Status</th>
+            <th class="px-6 py-4 font-medium text-right">Updated At</th>
+          </tr>
+        </thead>
+        <tbody id="messages-tbody" class="divide-y divide-slate-100">
+          <tr>
+            <td colspan="5" class="px-6 py-8 text-center text-slate-400">Loading network traffic...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    async function fetchMessages() {
+      try {
+        const res = await fetch('/api/messages');
+        const data = await res.json();
+        renderMessages(data.messages);
+      } catch (err) {
+        console.error('Failed to fetch messages:', err);
+      }
+    }
+
+    function renderMessages(messages) {
+      const tbody = document.getElementById('messages-tbody');
+      
+      if (messages.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-slate-400">No messages in the network yet. Try sending a campaign!</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = messages.map(msg => `
+        <tr class="hover:bg-slate-50/50 transition-colors">
+          <td class="px-6 py-4 font-mono text-xs text-slate-500 truncate max-w-[120px]" title="${msg.id}">${msg.id}</td>
+          <td class="px-6 py-4">
+            <span class="capitalize px-2 py-1 bg-slate-100 text-slate-600 rounded text-xs font-medium border border-slate-200">
+              ${msg.channel || 'Email'}
+            </span>
+          </td>
+          <td class="px-6 py-4 font-medium">${msg.recipient}</td>
+          <td class="px-6 py-4">
+            <span class="capitalize px-2.5 py-1 rounded-full text-xs font-semibold border status-${msg.status}">
+              ${msg.status}
+            </span>
+          </td>
+          <td class="px-6 py-4 text-right text-slate-500 text-xs">
+            ${new Date(msg.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Initial fetch
+    fetchMessages();
+    
+    // Poll every 1.5 seconds
+    setInterval(fetchMessages, 1500);
+  </script>
+</body>
+</html>
