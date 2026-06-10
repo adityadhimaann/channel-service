@@ -1,4 +1,4 @@
-# 📡 Mock Channel Service (Webhook Delivery Network)
+# 📡 Mock Channel Service (Webhook Delivery Network) - https://channel-service-cxvh.onrender.com
 
 This is a lightweight, isolated Node.js microservice built for the Xeno Mini CRM Take-Home Assignment. 
 
